@@ -1,9 +1,10 @@
 import MapView, {UrlTile} from 'react-native-maps';
+import { View } from 'react-native';
 
 const MapTest = () => {
-    return (
+    return (<View style={{ width: '100%', height: '100%', borderRadius: 10, overflow: 'hidden' }}>
         <MapView
-            style={{ width: '90%', height: '80%' }}
+            style={{ width: '100%', height: '100%'}}
             initialRegion={{
                 latitude: 37.78825,
                 longitude: -122.4324,
@@ -17,7 +18,7 @@ const MapTest = () => {
             />
 
         </MapView>
-    )
+    </View>)
 }
 
 export default MapTest;

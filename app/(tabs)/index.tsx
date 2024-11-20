@@ -1,69 +1,67 @@
-import { useState, useEffect } from "react";
-import * as Location from 'expo-location';
-import Map from '@/components/Map';
-import PageContainer from '@/components/PageContainer';
+import { useEffect, useState } from "react";
+import DraggableMarker from "@/components/DraggableMarker";
+import Map from "@/components/Map";
+import PageContainer from "@/components/PageContainer";
 import { Position } from "@/constants/Types";
+import useUserLocation from "@/hooks/useUserLocation";
+import { Text } from "react-native";
 
 const Markers = [
-    {
-        lat: 37.78825,
-        lon: -122.4324,
-        name: "San Francisco",
-        informations: "The best city in the world"
-    },
-    {
-        lat: 48.8566,
-        lon: 2.3522,
-        name: "Paris",
-        informations: "The city of love"
-    },
-    {
-        lat: 51.5074,
-        lon: -0.1278,
-        name: "London",
-        informations: "The city of the queen"
-    },
-    {
-        lat: 40.7128,
-        lon: -74.0060,
-        name: "New York",
-        informations: "The city that never sleeps"
-    }
+  {
+    lat: 37.78825,
+    lon: -122.4324,
+    name: "San Francisco",
+    informations: "The best city in the world",
+  },
+  {
+    lat: 48.8566,
+    lon: 2.3522,
+    name: "Paris",
+    informations: "The city of love",
+  },
+  {
+    lat: 51.5074,
+    lon: -0.1278,
+    name: "London",
+    informations: "The city of the queen",
+  },
+  {
+    lat: 40.7128,
+    lon: -74.006,
+    name: "New York",
+    informations: "The city that never sleeps",
+  },
 ];
 
 const Home = (): JSX.Element => {
-    const [initial, setInitial] = useState<Position>({ lat: 37.78825, lon: -122.4324 });
-    const [positionIsLoaded, setPositionIsLoaded] = useState(false);
+  const { position, error } = useUserLocation();
+  const [draggedPosition, setDraggedPosition] = useState<Position | null>(null);
 
-    useEffect(() => {
-        const fetchUserLocation = async () => {
-            // Demande de permissions pour accéder à la position
-            const { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                console.error('Permission to access location was denied');
-                return;
-            }
+  // Mettre à jour draggedPosition lorsque position est disponible
+  useEffect(() => {
+    if (position && !draggedPosition) {
+      setDraggedPosition(position);
+    }
+  }, [position]);
 
-            // Obtenir la position actuelle de l'utilisateur
-            const location = await Location.getCurrentPositionAsync({});
-            setInitial({
-                lat: location.coords.latitude,
-                lon: location.coords.longitude
-            });
-        };
-
-        fetchUserLocation();
-        setPositionIsLoaded(true);
-    }, []);
-
-    return (
-        <PageContainer title="Home">
-            {positionIsLoaded && <Map 
-                markers={Markers} 
-                initalRegion={initial} 
-            />}
-        </PageContainer>
-    );
+  return (
+    <PageContainer title="Home">
+      {error && <p>{error}</p>}
+      {<Text>{draggedPosition?.lat} : {draggedPosition?.lon}</Text>}
+      {position && draggedPosition && (
+        <Map markers={Markers} initalRegion={position}>
+          <DraggableMarker
+            initialPosition={draggedPosition}
+            name="You"
+            informations="Your current position"
+            onDragStart={(newPosition) => setDraggedPosition(newPosition)}
+            onDragEnd={(newPosition) => setDraggedPosition(newPosition)}
+          />
+        </Map>
+      )}
+    </PageContainer>
+  );
 };
 
 export default Home;
+

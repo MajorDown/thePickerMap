@@ -5,12 +5,15 @@ import { Position } from "@/constants/Types";
 import useUserLocation from "@/hooks/useUserLocation";
 import { Text, View, StyleSheet } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import Colors from "@/constants/Colors";
+import NameInput from "@/components/NameInput";
+import InfosInput from "@/components/InfosInput";
 
 const styles = StyleSheet.create({
     locationMarker: {
         position: "absolute",
         bottom: "50%",
-        transform: [{ translateY: 32 }],
+        transform: [{ translateY: 20}, { translateX: 12 }],
         right: "50%",
         zIndex: 999,
     }
@@ -44,28 +47,29 @@ const Markers = [
 ];
 
 const Home = (): JSX.Element => {
-  const { position, error } = useUserLocation();
-  const [draggedPosition, setDraggedPosition] = useState<Position | null>(null);
+    const { position, error } = useUserLocation();
+    const [draggedPosition, setDraggedPosition] = useState<Position | null>(null);
+    const [name, setName] = useState<string>("");
+    const [infos, setInfos] = useState<string>("");
 
-  // Mettre à jour draggedPosition lorsque position est disponible
-  useEffect(() => {
-    if (position && !draggedPosition) {
-      setDraggedPosition(position);
-    }
-  }, [position]);
+    useEffect(() => {
+        if (position && !draggedPosition) setDraggedPosition(position);
+    }, [position]);
 
-    return (<PageContainer title="Home">
+    return (<PageContainer title="Enregistrez Vos Cuillettes">
         {error && <p>{error}</p>}
-        {<Text>{draggedPosition?.lat} : {draggedPosition?.lon}</Text>}
-        {position && draggedPosition && (
+        <NameInput value={name} onNameChange={(newValue) => setName(newValue)}/>
+        <InfosInput value={infos} onInfosChange={(newValue) => setInfos(newValue)}/>
+        {position && draggedPosition && (<>
             <Map
                 markers={Markers} 
-                initalRegion={position}
+                initalPosition={position}
+                onPositionChange={(region) => setDraggedPosition({ lat: region.lat, lon: region.lon })}
             />
-        )}
-        <View style={styles.locationMarker}>
-            <FontAwesome name="mouse-pointer" color="red" size={32} />
-        </View>
+            <View style={styles.locationMarker}>
+                <FontAwesome name="mouse-pointer" color={Colors.white} size={32} />
+            </View>
+        </>)}
     </PageContainer>);
 };
 

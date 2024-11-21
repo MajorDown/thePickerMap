@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MapView, { Marker, UrlTile, Region } from 'react-native-maps';
 import { View } from 'react-native';
 import { PropsWithChildren } from 'react';
+import { Position } from '@/constants/Types';
 
 type MarkerType = {
     lat: number;
@@ -12,21 +13,26 @@ type MarkerType = {
 
 type MapProps = PropsWithChildren<{
     markers: MarkerType[];
-    initalRegion: {
+    initalPosition: {
         lat: number;
         lon: number;
     };
+    onPositionChange?: (position: Position) => void;
 }>;
 
 const Map = (props: MapProps) => {
     const [mapCenter, setMapCenter] = useState({
-        lat: props.initalRegion.lat,
-        lon: props.initalRegion.lon,
+        lat: props.initalPosition.lat,
+        lon: props.initalPosition.lon,
     });
 
     // Fonction appelée lorsque la région change sur la MapView
     const handleRegionChangeComplete = (region: Region) => {
         setMapCenter({
+            lat: region.latitude,
+            lon: region.longitude,
+        });
+        props.onPositionChange?.({
             lat: region.latitude,
             lon: region.longitude,
         });
@@ -36,7 +42,7 @@ const Map = (props: MapProps) => {
         <View
             style={{
                 width: '100%',
-                height: '100%',
+                height: 400,
                 borderRadius: 10,
                 overflow: 'hidden',
             }}
@@ -45,8 +51,8 @@ const Map = (props: MapProps) => {
                 style={{ width: '100%', height: '100%' }}
                 moveOnMarkerPress={false}
                 initialRegion={{
-                    latitude: props.initalRegion.lat,
-                    longitude: props.initalRegion.lon,
+                    latitude: props.initalPosition.lat,
+                    longitude: props.initalPosition.lon,
                     latitudeDelta: 0.005,
                     longitudeDelta: 0.005,
                 }}
@@ -67,6 +73,14 @@ const Map = (props: MapProps) => {
                         description={marker.informations}
                     />
                 ))}
+                <Marker 
+                    coordinate={{
+                        latitude: mapCenter.lat,
+                        longitude: mapCenter.lon,
+                    }}
+                    title="Position"
+                    description="Your current position"
+                />
                 {props.children}
             </MapView>
         </View>

@@ -1,5 +1,12 @@
 import React from 'react';
 import { Marker, MarkerDragStartEndEvent } from 'react-native-maps';
+import { StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+    marker: {
+        zIndex: 999,
+    },
+});
 
 type DraggableMarkerProps = {
     initialPosition: {
@@ -7,7 +14,6 @@ type DraggableMarkerProps = {
         lon: number;
     };
     onDragEnd: (position: { lat: number; lon: number }) => void;
-    onDragStart: (position: { lat: number; lon: number }) => void;
     name: string;
     informations: string;
 };
@@ -20,10 +26,10 @@ type DraggableMarkerProps = {
 const DraggableMarker = (props: DraggableMarkerProps): JSX.Element => {
     const [position, setPosition] = React.useState(props.initialPosition);
 
+    console.log('DraggableMarker', position);
+
     const handleDragStart = (event: MarkerDragStartEndEvent) => {
-        const { latitude, longitude } = event.nativeEvent.coordinate;
-        const newPosition = { lat: latitude, lon: longitude };
-        setPosition(newPosition);
+        console.log(event.nativeEvent.coordinate);
     }
 
     const handleDragEnd = (event: MarkerDragStartEndEvent) => {
@@ -38,6 +44,7 @@ const DraggableMarker = (props: DraggableMarkerProps): JSX.Element => {
 
     return (
         <Marker
+            style={styles.marker}
             coordinate={{
                 latitude: position.lat,
                 longitude: position.lon,

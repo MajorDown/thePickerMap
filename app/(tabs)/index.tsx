@@ -1,10 +1,20 @@
 import { useEffect, useState } from "react";
-import DraggableMarker from "@/components/DraggableMarker";
 import Map from "@/components/Map";
 import PageContainer from "@/components/PageContainer";
 import { Position } from "@/constants/Types";
 import useUserLocation from "@/hooks/useUserLocation";
-import { Text } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+
+const styles = StyleSheet.create({
+    locationMarker: {
+        position: "absolute",
+        bottom: "50%",
+        transform: [{ translateY: 32 }],
+        right: "50%",
+        zIndex: 999,
+    }
+})
 
 const Markers = [
   {
@@ -44,23 +54,19 @@ const Home = (): JSX.Element => {
     }
   }, [position]);
 
-  return (
-    <PageContainer title="Home">
-      {error && <p>{error}</p>}
-      {<Text>{draggedPosition?.lat} : {draggedPosition?.lon}</Text>}
-      {position && draggedPosition && (
-        <Map markers={Markers} initalRegion={position}>
-          <DraggableMarker
-            initialPosition={draggedPosition}
-            name="You"
-            informations="Your current position"
-            onDragStart={(newPosition) => setDraggedPosition(newPosition)}
-            onDragEnd={(newPosition) => setDraggedPosition(newPosition)}
-          />
-        </Map>
-      )}
-    </PageContainer>
-  );
+    return (<PageContainer title="Home">
+        {error && <p>{error}</p>}
+        {<Text>{draggedPosition?.lat} : {draggedPosition?.lon}</Text>}
+        {position && draggedPosition && (
+            <Map
+                markers={Markers} 
+                initalRegion={position}
+            />
+        )}
+        <View style={styles.locationMarker}>
+            <FontAwesome name="mouse-pointer" color="red" size={32} />
+        </View>
+    </PageContainer>);
 };
 
 export default Home;

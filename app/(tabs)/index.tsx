@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 import Map from "@/components/Map";
 import PageContainer from "@/components/PageContainer";
-import { Position } from "@/constants/Types";
+import { Position, ProductType, ProductTypes } from "@/constants/Types";
 import useUserLocation from "@/hooks/useUserLocation";
 import { Text, View, StyleSheet } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Colors from "@/constants/Colors";
 import NameInput from "@/components/NameInput";
 import InfosInput from "@/components/InfosInput";
+import SelectInput from "@/components/SelectInput";
+import { useDataContext } from "@/contexts/DataContext";
+import ProductTypesInput from "@/components/ProductTypesInput";
 
 const styles = StyleSheet.create({
     locationMarker: {
         position: "absolute",
         bottom: "50%",
-        transform: [{ translateY: 20}, { translateX: 12 }],
+        transform: [{ translateY: 0}, { translateX: 15 }],
         right: "50%",
         zIndex: 999,
     }
@@ -48,9 +51,13 @@ const Markers = [
 
 const Home = (): JSX.Element => {
     const { position, error } = useUserLocation();
+    const { pickedProducts } = useDataContext();
+
+
     const [draggedPosition, setDraggedPosition] = useState<Position | null>(null);
     const [name, setName] = useState<string>("");
     const [infos, setInfos] = useState<string>("");
+    const [productType, setProductType] = useState<ProductType>(ProductTypes[0]);
 
     useEffect(() => {
         if (position && !draggedPosition) setDraggedPosition(position);
@@ -60,6 +67,8 @@ const Home = (): JSX.Element => {
         {error && <p>{error}</p>}
         <NameInput value={name} onNameChange={(newValue) => setName(newValue)}/>
         <InfosInput value={infos} onInfosChange={(newValue) => setInfos(newValue)}/>
+        <ProductTypesInput value={productType} onChange={(newValue: ProductType) => setProductType(newValue as ProductType)}/>
+
         {position && draggedPosition && (<>
             <Map
                 markers={Markers} 
@@ -74,4 +83,3 @@ const Home = (): JSX.Element => {
 };
 
 export default Home;
-

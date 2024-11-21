@@ -1,8 +1,8 @@
-export const ProductTypes = ["fruit", "leaf", "root", "seed", "flower", "mushroom", "other"]; 
+export const ProductTypes = ["fruit", "leaf", "root", "seed", "flower", "mushroom", "other"] as const; 
 
-export type ProductType = keyof typeof ProductTypes;
+export type ProductType = (typeof ProductTypes)[number];
 
-export type ProductPosition = {
+export type Position = {
     lat: number;
     lon: number;
 }
@@ -28,7 +28,7 @@ export type PickedProduct = {
     id: string;
     name: string;
     type: ProductType;
-    position: ProductPosition;
+    position: Position;
     informations: string;
     date: PickDate;
 }

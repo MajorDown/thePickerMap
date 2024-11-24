@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         gap: 10,
+        margin: 5
     },
     input: {
         backgroundColor: Colors.white,
@@ -24,11 +25,12 @@ type ProductTypesInputProps = {
 
 const ProductTypesInput = (props: ProductTypesInputProps): JSX.Element => {
     return (<View style={styles.container}>
-        <Text style={GlobalsStyles.text}>Quel type de trésors avez-vous trouvé ?</Text>
+        <Text style={GlobalsStyles.text}>de quel type de trésors s'agit-il ?</Text>
         <SelectInput
             options={ProductTypes.map((type) => ({ label: type, value: type }))}
             onSelect={(newValue) => props.onChange(newValue as ProductType)}
-            selectBtnStyles={styles.input}           
+            selectBtnStyles={styles.input}
+            optionsListStyles={styles.input}          
         />
     </View>
     );

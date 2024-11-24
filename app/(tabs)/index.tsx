@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Map from "@/components/Map";
 import PageContainer from "@/components/PageContainer";
-import { Position, ProductType, ProductTypes } from "@/constants/Types";
+import { PickDate, Position, ProductType, ProductTypes } from "@/constants/Types";
 import useUserLocation from "@/hooks/useUserLocation";
 import { Text, View, StyleSheet } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -11,6 +11,8 @@ import InfosInput from "@/components/InfosInput";
 import SelectInput from "@/components/SelectInput";
 import { useDataContext } from "@/contexts/DataContext";
 import ProductTypesInput from "@/components/ProductTypesInput";
+import NumberInput from "@/components/NumberInput";
+import DateInput from "@/components/DateInput";
 
 const styles = StyleSheet.create({
     locationMarker: {
@@ -53,11 +55,11 @@ const Home = (): JSX.Element => {
     const { position, error } = useUserLocation();
     const { pickedProducts } = useDataContext();
 
-
     const [draggedPosition, setDraggedPosition] = useState<Position | null>(null);
     const [name, setName] = useState<string>("");
     const [infos, setInfos] = useState<string>("");
     const [productType, setProductType] = useState<ProductType>(ProductTypes[0]);
+    const [date, setDate] = useState<PickDate>({ day: "01", month: "01", year: "2024" });
 
     useEffect(() => {
         if (position && !draggedPosition) setDraggedPosition(position);
@@ -66,8 +68,9 @@ const Home = (): JSX.Element => {
     return (<PageContainer title="Enregistrez Vos Cuillettes">
         {error && <p>{error}</p>}
         <NameInput value={name} onNameChange={(newValue) => setName(newValue)}/>
-        <InfosInput value={infos} onInfosChange={(newValue) => setInfos(newValue)}/>
         <ProductTypesInput value={productType} onChange={(newValue: ProductType) => setProductType(newValue as ProductType)}/>
+        <InfosInput value={infos} onInfosChange={(newValue) => setInfos(newValue)}/>
+        <DateInput date={date} onDateChange={(value) => setDate(value)}/>   
 
         {position && draggedPosition && (<>
             <Map

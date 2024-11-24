@@ -3,6 +3,8 @@ import MapView, { Marker, UrlTile, Region } from 'react-native-maps';
 import { Animated, View, StyleSheet } from 'react-native';
 import { PropsWithChildren } from 'react';
 import { Position } from '@/constants/Types';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Colors from '@/constants/Colors';
 
 const styles = StyleSheet.create({
     container: {
@@ -10,7 +12,15 @@ const styles = StyleSheet.create({
         height: 400,
         borderRadius: 10,
         overflow: 'hidden',
+        position: 'relative',
     },
+    locationMarker: {
+        position: "absolute",
+        bottom: "50%",
+        transform: [{ translateY: 20}, { translateX: 0 }],
+        left: "50%",
+        zIndex: 999,
+    }
 });
 
 type MarkerType = {
@@ -21,6 +31,7 @@ type MarkerType = {
 };
 
 type MapProps = PropsWithChildren<{
+    wantCursor?: boolean;
     markers?: MarkerType[];
     initalPosition: {
         lat: number;
@@ -77,7 +88,7 @@ const Map = (props: MapProps) => {
     };
 
     return (
-        <Animated.View style={[styles.container,animatedStyle]}>
+        <Animated.View style={[styles.container, animatedStyle]}>
             <MapView
                 style={StyleSheet.absoluteFillObject}
                 moveOnMarkerPress={false}
@@ -104,7 +115,6 @@ const Map = (props: MapProps) => {
                         description={marker.informations}
                     />
                 ))}
-                {/* marker pour debug position */}
                 {/* <Marker
                     coordinate={{
                         latitude: mapCenter.lat,
@@ -115,6 +125,9 @@ const Map = (props: MapProps) => {
                 /> */}
                 {props.children}
             </MapView>
+            {props.wantCursor && <View style={styles.locationMarker}>
+                <FontAwesome name="mouse-pointer" color={Colors.white} size={32} />
+            </View>}
         </Animated.View>
     );
 };

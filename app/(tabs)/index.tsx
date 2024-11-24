@@ -3,26 +3,14 @@ import Map from "@/components/Map";
 import PageContainer from "@/components/PageContainer";
 import { PickDate, Position, ProductType, ProductTypes } from "@/constants/Types";
 import useUserLocation from "@/hooks/useUserLocation";
-import { Text, View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Colors from "@/constants/Colors";
 import NameInput from "@/components/NameInput";
 import InfosInput from "@/components/InfosInput";
-import SelectInput from "@/components/SelectInput";
 import { useDataContext } from "@/contexts/DataContext";
 import ProductTypesInput from "@/components/ProductTypesInput";
-import NumberInput from "@/components/NumberInput";
 import DateInput from "@/components/DateInput";
-
-const styles = StyleSheet.create({
-    locationMarker: {
-        position: "absolute",
-        bottom: "50%",
-        transform: [{ translateY: 0}, { translateX: 15 }],
-        right: "50%",
-        zIndex: 999,
-    }
-})
 
 const Markers = [
   {
@@ -72,16 +60,12 @@ const Home = (): JSX.Element => {
         <InfosInput value={infos} onInfosChange={(newValue) => setInfos(newValue)}/>
         <DateInput date={date} onDateChange={(value) => setDate(value)}/>   
 
-        {position && draggedPosition && (<>
-            <Map
-                markers={Markers} 
-                initalPosition={position}
-                onPositionChange={(region) => setDraggedPosition({ lat: region.lat, lon: region.lon })}
-            />
-            <View style={styles.locationMarker}>
-                <FontAwesome name="mouse-pointer" color={Colors.white} size={32} />
-            </View>
-        </>)}
+        {position && draggedPosition && (<Map
+            wantCursor      
+            markers={Markers} 
+            initalPosition={position}
+            onPositionChange={(region) => setDraggedPosition({ lat: region.lat, lon: region.lon })}
+        />)}
     </PageContainer>);
 };
 

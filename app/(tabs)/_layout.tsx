@@ -28,11 +28,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="test"
+        name="NewProduct"
         options={{
           headerShown: false,
-          title: 'Tests',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="code" color={color} />,
+          title: "ajout d'un nouveau produit",
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="location-arrow" color={color} />,
         }}
       />
       <Tabs.Screen

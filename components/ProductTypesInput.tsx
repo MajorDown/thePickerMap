@@ -23,6 +23,12 @@ type ProductTypesInputProps = {
     onChange: (value: ProductType) => void;
 };
 
+/**
+ * Composant ProductTypesInput
+ * @param {ProductType} props.value - La valeur actuelle
+ * @param {(value: ProductType) => void} props.onChange - Fonction de rappel pour gérer le changement de valeur
+ * @returns {JSX.Element}
+ */
 const ProductTypesInput = (props: ProductTypesInputProps): JSX.Element => {
     return (<View style={styles.container}>
         <Text style={GlobalsStyles.text}>de quel type de trésors s'agit-il ?</Text>

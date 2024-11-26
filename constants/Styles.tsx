@@ -12,5 +12,5 @@ export default StyleSheet.create({
         backgroundColor: Colors.white,
         color: Colors.background,
         borderRadius: 5
-    }
+    },
 });

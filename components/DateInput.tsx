@@ -47,21 +47,35 @@ const generateDays = (year: number, month: number): PickDate['day'][] => {
   );
 };
 
+/**
+ * Retourne la date actuelle au format PickDate.
+ * @returns {PickDate} - La date actuelle
+ */
+const getCurrentDate = (): PickDate => {
+  const now = new Date();
+  const day = String(now.getDate()).padStart(2, '0') as PickDate['day'];
+  const month = String(now.getMonth() + 1).padStart(2, '0') as PickDate['month']; // Mois en base 0
+  const year = String(now.getFullYear()) as PickDate['year'];
+  return { day, month, year };
+};
+
 type DateInputProps = {
-  date: PickDate;
+  date?: PickDate; // La date est maintenant optionnelle
   onDateChange: (date: PickDate) => void;
 };
 
 /**
  * Composant DateInput
- * @param {PickDate} props.date - La date actuelle
+ * @param {PickDate} [props.date] - La date actuelle (optionnelle, par défaut : aujourd'hui)
  * @param {(date: PickDate) => void} props.onDateChange - Fonction de rappel pour gérer le changement de date
  * @returns {JSX.Element}
  */
 const DateInput = (props: DateInputProps): JSX.Element => {
-  const [actualDate, setActualDate] = useState<PickDate>(props.date);
+  // Initialisation de la date par défaut avec la date d'aujourd'hui ou celle fournie en props
+  const initialDate = props.date || getCurrentDate();
+  const [actualDate, setActualDate] = useState<PickDate>(initialDate);
   const [validDays, setValidDays] = useState<PickDate['day'][]>(
-    generateDays(Number(props.date.year), Number(props.date.month))
+    generateDays(Number(initialDate.year), Number(initialDate.month))
   );
 
   const onDayChange = (day: string) => {
@@ -107,21 +121,21 @@ const DateInput = (props: DateInputProps): JSX.Element => {
       <SelectInput
         options={validDays.map((day) => ({ label: day, value: day }))}
         onSelect={(day) => onDayChange(day.toString())}
-        defaultValue={{ label: props.date.day, value: props.date.day }}
+        defaultValue={{ label: initialDate.day, value: initialDate.day }}
         selectBtnStyles={styles.input}
         optionsListStyles={styles.input}
       />
       <SelectInput
         options={months.map((month) => ({ label: month, value: month }))}
         onSelect={(month) => onMonthChange(month.toString())}
-        defaultValue={{ label: props.date.month, value: props.date.month }}
+        defaultValue={{ label: initialDate.month, value: initialDate.month }}
         selectBtnStyles={styles.input}
         optionsListStyles={styles.input}
       />
       <SelectInput
         options={years.map((year) => ({ label: year, value: year }))}
         onSelect={(year) => onYearChange(year.toString())}
-        defaultValue={{ label: props.date.year, value: props.date.year }}
+        defaultValue={{ label: initialDate.year, value: initialDate.year }}
         selectBtnStyles={styles.input}
         optionsListStyles={styles.input}
       />

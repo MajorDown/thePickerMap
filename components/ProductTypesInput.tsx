@@ -31,7 +31,7 @@ type ProductTypesInputProps = {
  */
 const ProductTypesInput = (props: ProductTypesInputProps): JSX.Element => {
     return (<View style={styles.container}>
-        <Text style={GlobalsStyles.text}>de quel type de trésors s'agit-il ?</Text>
+        <Text style={GlobalsStyles.text}>Dans quel type classez-vous ce trésors ?</Text>
         <SelectInput
             options={ProductTypes.map((type) => ({ label: type, value: type }))}
             onSelect={(newValue) => props.onChange(newValue as ProductType)}

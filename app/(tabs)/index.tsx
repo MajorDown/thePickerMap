@@ -3,11 +3,8 @@ import Map from "@/components/Map";
 import PageContainer from "@/components/PageContainer";
 import { PickDate, Position, ProductType, ProductTypes } from "@/constants/Types";
 import useUserLocation from "@/hooks/useUserLocation";
-import NameInput from "@/components/NameInput";
-import InfosInput from "@/components/InfosInput";
 import { useDataContext } from "@/contexts/DataContext";
-import ProductTypesInput from "@/components/ProductTypesInput";
-import DateInput from "@/components/DateInput";
+
 
 const Markers = [
   {
@@ -15,24 +12,28 @@ const Markers = [
     lon: -122.4324,
     name: "San Francisco",
     informations: "The best city in the world",
+    type: ProductTypes[0],
   },
   {
     lat: 48.8566,
     lon: 2.3522,
     name: "Paris",
     informations: "The city of love",
+    type: ProductTypes[0],
   },
   {
     lat: 51.5074,
     lon: -0.1278,
     name: "London",
     informations: "The city of the queen",
+    type: ProductTypes[0],
   },
   {
     lat: 40.7128,
     lon: -74.006,
     name: "New York",
     informations: "The city that never sleeps",
+    type: ProductTypes[0],
   },
 ];
 

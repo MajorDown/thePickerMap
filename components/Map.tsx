@@ -2,14 +2,16 @@ import React, { useState, useRef, useEffect } from 'react';
 import MapView, { Marker, UrlTile, Region } from 'react-native-maps';
 import { Animated, View, StyleSheet } from 'react-native';
 import { PropsWithChildren } from 'react';
-import { Position } from '@/constants/Types';
+import { Position, ProductType } from '@/constants/Types';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Colors from '@/constants/Colors';
 
 const styles = StyleSheet.create({
     container: {
+        marginTop: 5,
+        marginBottom: 5,
         width: '100%',
-        height: 400,
+        height: 450,
         borderRadius: 10,
         overflow: 'hidden',
         position: 'relative',
@@ -28,6 +30,7 @@ type MarkerType = {
     lon: number;
     name: string;
     informations: string;
+    type: ProductType;
 };
 
 type MapProps = PropsWithChildren<{

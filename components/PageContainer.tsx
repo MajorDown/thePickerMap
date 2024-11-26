@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, ScrollView, Text, StyleSheet} from 'react-native';
 import { PropsWithChildren } from 'react';
 import Colors from '@/constants/Colors';
 
@@ -27,12 +27,12 @@ type PageContainerProps = PropsWithChildren<{
 }>;
 
 const PageContainer = (props: PageContainerProps): JSX.Element => {
-    return (<View style={styles.container}>
+    return (<ScrollView style={styles.container}>
         <Text style={styles.title}>{props.title}</Text>
         <View style={styles.content}>
             {props.children}
         </View>
-    </View>
+    </ScrollView>
     );
 }
 

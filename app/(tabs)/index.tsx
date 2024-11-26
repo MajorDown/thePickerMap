@@ -3,9 +3,6 @@ import Map from "@/components/Map";
 import PageContainer from "@/components/PageContainer";
 import { PickDate, Position, ProductType, ProductTypes } from "@/constants/Types";
 import useUserLocation from "@/hooks/useUserLocation";
-import { View } from "react-native";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import Colors from "@/constants/Colors";
 import NameInput from "@/components/NameInput";
 import InfosInput from "@/components/InfosInput";
 import { useDataContext } from "@/contexts/DataContext";
@@ -53,13 +50,8 @@ const Home = (): JSX.Element => {
         if (position && !draggedPosition) setDraggedPosition(position);
     }, [position]);
 
-    return (<PageContainer title="Enregistrez Vos Cuillettes">
-        {error && <p>{error}</p>}
-        <NameInput value={name} onNameChange={(newValue) => setName(newValue)}/>
-        <ProductTypesInput value={productType} onChange={(newValue: ProductType) => setProductType(newValue as ProductType)}/>
-        <InfosInput value={infos} onInfosChange={(newValue) => setInfos(newValue)}/>
-        <DateInput date={date} onDateChange={(value) => setDate(value)}/>   
-
+    return (<PageContainer title="Vos Cuillettes">
+        {error && <p>{error}</p>} 
         {position && draggedPosition && (<Map
             wantCursor      
             markers={Markers} 

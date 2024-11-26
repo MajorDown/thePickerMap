@@ -23,7 +23,7 @@ export default function TabLayout() {
         name="index"
         options={{
           headerShown: false,
-          title: 'Home',
+          title: 'Vos Cuillettes',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="map" color={color} />,
         }}
       />
@@ -31,7 +31,7 @@ export default function TabLayout() {
         name="NewProduct"
         options={{
           headerShown: false,
-          title: "ajout d'un nouveau produit",
+          title: "Nouvelle Cueillette",
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="location-arrow" color={color} />,
         }}
       />

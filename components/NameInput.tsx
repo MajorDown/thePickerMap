@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 
 type NameInputProps = {
     value: string;
-    onNameChange: (name: string) => void;
+    onChange: (name: string) => void;
 }
 
 const NameInput = (props: NameInputProps): JSX.Element => {
@@ -27,7 +27,7 @@ const NameInput = (props: NameInputProps): JSX.Element => {
             style={[GlobalsStyles.input, styles.input]}
             value={props.value}
             placeholder="Prunelle, Ail des ours, etc..."
-            onChangeText={text => props.onNameChange(text)}
+            onChangeText={text => props.onChange(text)}
             maxLength={30}
         />
     </View>)

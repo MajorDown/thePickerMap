@@ -17,6 +17,11 @@ export type SelectTextStyles = {
   fontColor?: TextStyle['color'];
 };
 
+export type SelectArrowStyles = {
+  width?: ViewStyle['width'];
+  height?: ViewStyle['height'];
+}
+
 export type SelectBtnStyles = {
   backgroundColor?: ViewStyle['backgroundColor'];
   borderColor?: ViewStyle['borderColor'];
@@ -46,6 +51,7 @@ export type SelectInputProps = {
   defaultValue?: SelectOption;
   width?: number;
   selectTextStyles?: SelectTextStyles;
+  selectArrowStyles?: SelectArrowStyles
   selectContainerStyles?: SelectContainerStyles;
   selectBtnStyles?: SelectBtnStyles;
   optionsListStyles?: OptionsListStyles;
@@ -72,6 +78,10 @@ export type SelectInputProps = {
 const SelectInput = (props: SelectInputProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<string | number | undefined>(props.defaultValue?.value);
+
+  const data = props.defaultValue && !props.options.some((opt) => opt.value === props.defaultValue?.value)
+  ? [props.defaultValue, ...props.options]
+  : props.options;
 
   // Ref pour l'animation de hauteur
   const animatedHeight = useRef(new Animated.Value(0)).current; // `Animated.Value` initialisé avec 0
@@ -105,79 +115,104 @@ const SelectInput = (props: SelectInputProps): JSX.Element => {
   return (
     <View
       style={[
-        { overflow: 'hidden'},
-        { width: props.width || undefined },
-        { borderWidth: props.selectContainerStyles?.borderWidth || 1 },
-        { borderColor: props.selectContainerStyles?.borderColor || '#ccc' },
-        { borderRadius: props.selectContainerStyles?.borderRadius || 0 },
+        {
+          position: 'relative', // Nécessaire pour que `absolute` fonctionne correctement sur les enfants
+          width: props.width || undefined,
+          borderWidth: props.selectContainerStyles?.borderWidth || 1,
+          borderColor: props.selectContainerStyles?.borderColor || '#ccc',
+          borderRadius: props.selectContainerStyles?.borderRadius || 0,
+        },
       ]}
     >
       <Pressable
         style={[
-          { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-          { backgroundColor: props.selectBtnStyles?.backgroundColor || '#fff' },
-          { borderColor: props.selectBtnStyles?.borderColor || '#ccc' },
-          { borderRadius: props.selectBtnStyles?.borderRadius || 0 },
-          { borderWidth: props.selectBtnStyles?.borderWidth || 1 },
-          { padding: props.selectBtnStyles?.padding || 10 },
+          {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          },
+          {
+            backgroundColor: props.selectBtnStyles?.backgroundColor || '#fff',
+            borderColor: props.selectBtnStyles?.borderColor || '#ccc',
+            borderRadius: props.selectBtnStyles?.borderRadius || 0,
+            borderWidth: props.selectBtnStyles?.borderWidth || 1,
+            padding: props.selectBtnStyles?.padding || 10,
+          },
         ]}
         onPress={toggleDropdown}
       >
         {props.options.length !== 0 && (
           <Text
             style={[
-              { fontSize: props.selectTextStyles?.fontSize || 16 },
-              { color: props.selectTextStyles?.fontColor || '#333' },
+              {
+                marginRight: 5,
+                fontSize: props.selectTextStyles?.fontSize || 16,
+                color: props.selectTextStyles?.fontColor || '#333',
+              },
             ]}
           >
             {selectedValue || 'Choisissez une option'}
           </Text>
         )}
         {props.options.length === 0 && <Text>Aucune option disponible</Text>}
-        {isOpen ? 
-          <Image 
-            source={require('@/assets/images/arrow_up.png')} 
+        {isOpen ? (
+          <Image
+            source={require('@/assets/images/arrow_up.png')}
             style={{
-              width: (props.selectTextStyles?.fontSize ? (props.selectTextStyles.fontSize)*2 : 24), 
-              height: props.selectTextStyles?.fontSize || 12
+              width: props.selectArrowStyles?.width || 20,
+              height: props.selectArrowStyles?.height || 10,
             }}
-          /> : 
-          <Image 
+          />
+        ) : (
+          <Image
             source={require('@/assets/images/arrow_down.png')}
             style={{
-              width: (props.selectTextStyles?.fontSize ? (props.selectTextStyles.fontSize)*2 : 24), 
-              height: props.selectTextStyles?.fontSize || 12
-            }}            
-          />}
+              width: props.selectArrowStyles?.width || 20,
+              height: props.selectArrowStyles?.height || 10,
+            }}
+          />
+        )}
       </Pressable>
-
+  
       {isOpen && (
         <Animated.View
           style={[
-            { height: animatedHeight, overflow: 'hidden' },
-            { backgroundColor: props.optionsListStyles?.backgroundColor || '#fff' },
-            { borderRadius: props.optionsListStyles?.borderRadius || 0 },
-            { borderColor: props.optionsListStyles?.borderColor || '#ccc' },
-            { borderWidth: props.optionsListStyles?.borderWidth || 0 },
-            { marginTop: props.optionsListStyles?.marginTop || 0 },
+            {
+              position: 'absolute', 
+              top: 0,
+              left: 0,
+              right: 0,
+              zIndex: 999,
+              overflow: 'hidden',
+              height: animatedHeight,
+              backgroundColor: props.optionsListStyles?.backgroundColor || '#fff',
+              borderRadius: props.optionsListStyles?.borderRadius || 0,
+              borderColor: props.optionsListStyles?.borderColor || '#ccc',
+              borderWidth: props.optionsListStyles?.borderWidth || 0,
+              marginTop: props.optionsListStyles?.marginTop || 0,
+            },
           ]}
         >
           <FlatList
-            data={props.defaultValue ? [props.defaultValue, ...props.options] : props.options}
+            data={data}
             keyExtractor={(item) => item.value.toString()}
             renderItem={({ item }) => (
               <Pressable
                 onPress={() => handleSelect(item.value)}
                 style={[
-                  { borderColor: props.optionStyles?.borderColor || '#ccc' },
-                  { borderWidth: props.optionStyles?.borderWidth || 1 },
-                  { padding: props.optionStyles?.padding || 10 },
+                  {
+                    borderColor: props.optionStyles?.borderColor || '#ccc',
+                    borderWidth: props.optionStyles?.borderWidth || 1,
+                    padding: props.optionStyles?.padding || 10,
+                  },
                 ]}
               >
                 <Text
                   style={[
-                    { fontSize: props.selectTextStyles?.fontSize || 16 },
-                    { color: props.selectTextStyles?.fontColor || '#333' },
+                    {
+                      fontSize: props.selectTextStyles?.fontSize || 16,
+                      color: props.selectTextStyles?.fontColor || '#333',
+                    },
                   ]}
                 >
                   {item.label}
@@ -189,6 +224,7 @@ const SelectInput = (props: SelectInputProps): JSX.Element => {
       )}
     </View>
   );
+  
 };
 
 export default SelectInput;

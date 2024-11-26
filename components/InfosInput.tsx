@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 
 type InfosInputProps = {
     value: string;
-    onInfosChange: (name: string) => void;
+    onChange: (name: string) => void;
 }
 
 const InfosInput = (props: InfosInputProps): JSX.Element => {
@@ -27,7 +27,7 @@ const InfosInput = (props: InfosInputProps): JSX.Element => {
             style={[GlobalsStyles.input, styles.input]}
             value={props.value}
             placeholder="Trouvé sur une pente raide, à l'ombre, etc..."
-            onChangeText={text => props.onInfosChange(text)}
+            onChangeText={text => props.onChange(text)}
             maxLength={300}
             multiline={true}  
             numberOfLines={2}      

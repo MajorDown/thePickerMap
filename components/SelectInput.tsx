@@ -116,7 +116,7 @@ const SelectInput = (props: SelectInputProps): JSX.Element => {
     <View
       style={[
         {
-          position: 'relative', // Nécessaire pour que `absolute` fonctionne correctement sur les enfants
+          position: 'relative',
           width: props.width || undefined,
           borderWidth: props.selectContainerStyles?.borderWidth || 1,
           borderColor: props.selectContainerStyles?.borderColor || '#ccc',
@@ -130,13 +130,11 @@ const SelectInput = (props: SelectInputProps): JSX.Element => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-          },
-          {
             backgroundColor: props.selectBtnStyles?.backgroundColor || '#fff',
             borderColor: props.selectBtnStyles?.borderColor || '#ccc',
             borderRadius: props.selectBtnStyles?.borderRadius || 0,
             borderWidth: props.selectBtnStyles?.borderWidth || 1,
-            padding: props.selectBtnStyles?.padding || 10,
+            padding: props.selectBtnStyles?.padding || 5,
           },
         ]}
         onPress={toggleDropdown}
@@ -194,6 +192,8 @@ const SelectInput = (props: SelectInputProps): JSX.Element => {
           ]}
         >
           <FlatList
+            nestedScrollEnabled // Permet le défilement imbriqué
+            keyboardShouldPersistTaps="handled" // Gère les événements de toucher
             data={data}
             keyExtractor={(item) => item.value.toString()}
             renderItem={({ item }) => (

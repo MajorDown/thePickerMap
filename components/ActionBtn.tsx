@@ -34,6 +34,7 @@ type ActionBtnProps = PropsWithChildren<{
 const ActionBtn = (props: ActionBtnProps):JSX.Element => {
     return (<Pressable 
         style={({pressed}) => [styles.container, pressed && styles.pressed]}
+        onPress={() => props.onPress()}
     >
         {props.label && (<Text style={styles.label} >{props.label}</Text>)}
         {!props.label && props.children && (props.children) }

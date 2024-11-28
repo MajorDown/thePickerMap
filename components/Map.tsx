@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginBottom: 5,
         width: '100%',
-        height: 450,
+        height: 350,
         borderRadius: 10,
         overflow: 'hidden',
         position: 'relative',
@@ -93,13 +93,14 @@ const Map = (props: MapProps) => {
     return (
         <Animated.View style={[styles.container, animatedStyle]}>
             <MapView
+                provider={undefined}
                 style={StyleSheet.absoluteFillObject}
                 moveOnMarkerPress={false}
                 initialRegion={{
                     latitude: props.initalPosition.lat,
                     longitude: props.initalPosition.lon,
-                    latitudeDelta: 0.005,
-                    longitudeDelta: 0.005,
+                    latitudeDelta: 0.01,
+                    longitudeDelta: 0.01,
                 }}
                 onRegionChangeComplete={handleRegionChangeComplete}
             >

@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: Colors.white,
+    padding: 5
   },
 });
 

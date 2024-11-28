@@ -1,4 +1,4 @@
-import {View, ScrollView, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import { PropsWithChildren } from 'react';
 import Colors from '@/constants/Colors';
 
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        padding: 10,
+        padding: 5,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
@@ -27,12 +27,12 @@ type PageContainerProps = PropsWithChildren<{
 }>;
 
 const PageContainer = (props: PageContainerProps): JSX.Element => {
-    return (<ScrollView style={styles.container}>
+    return (<View style={styles.container}>
         <Text style={styles.title}>{props.title}</Text>
         <View style={styles.content}>
             {props.children}
         </View>
-    </ScrollView>
+    </View>
     );
 }
 

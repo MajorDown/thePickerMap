@@ -10,6 +10,7 @@ import ProductTypesInput from "@/components/ProductTypesInput";
 import DateInput from "@/components/DateInput";
 import { generateProductId } from "@/tools/generateProductId";
 import ActionBtn from "@/components/ActionBtn";
+import { router } from 'expo-router';
 
 const Markers = [
   {
@@ -60,6 +61,7 @@ const NewProduct = (): JSX.Element => {
     }, [position]);
 
     const handleSave = () => {
+        console.log("Enregistrement du produit...");
         if (!date) return;
         if (!name) return;
         if (!productType) return;
@@ -75,6 +77,12 @@ const NewProduct = (): JSX.Element => {
             date 
         } as PickedProduct;
         updatePickedProducts([...pickedProducts, newPickedProduct]);
+        setName("");
+        setInfos("");
+        setProductType(ProductTypes[0]);
+        console.log("Nouveau produit ajouté !");
+        router.push("/(tabs)");
+        console.log("Redirection vers la page d'accueil...");
     }
 
     return (<PageContainer title="Enregistrez Votre Cuillette">
@@ -89,7 +97,7 @@ const NewProduct = (): JSX.Element => {
             initalPosition={position}
             onPositionChange={(region) => setDraggedPosition({ lat: region.lat, lon: region.lon })}
         />)}
-        <ActionBtn onPress={handleSave} label="Enregistrer" />
+        <ActionBtn onPress={() => handleSave()} label="Enregistrer" />
     </PageContainer>);
 };
 

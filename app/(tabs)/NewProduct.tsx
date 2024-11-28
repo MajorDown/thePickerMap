@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Map from "@/components/Map";
+import WebMap from "@/components/WebMap";
 import PageContainer from "@/components/PageContainer";
 import { PickDate, PickedProduct, Position, ProductType, ProductTypes } from "@/constants/Types";
 import useUserLocation from "@/hooks/useUserLocation";
@@ -11,33 +12,6 @@ import DateInput from "@/components/DateInput";
 import { generateProductId } from "@/tools/generateProductId";
 import ActionBtn from "@/components/ActionBtn";
 import { router } from 'expo-router';
-
-const Markers = [
-  {
-    lat: 37.78825,
-    lon: -122.4324,
-    name: "San Francisco",
-    informations: "The best city in the world",
-  },
-  {
-    lat: 48.8566,
-    lon: 2.3522,
-    name: "Paris",
-    informations: "The city of love",
-  },
-  {
-    lat: 51.5074,
-    lon: -0.1278,
-    name: "London",
-    informations: "The city of the queen",
-  },
-  {
-    lat: 40.7128,
-    lon: -74.006,
-    name: "New York",
-    informations: "The city that never sleeps",
-  },
-];
 
 const NewProduct = (): JSX.Element => {
     const { position, error } = useUserLocation();
@@ -91,7 +65,7 @@ const NewProduct = (): JSX.Element => {
         <NameInput value={name} onChange={(value: string) => setName(value)} />
         <ProductTypesInput value={productType} onChange={(value: ProductType) => setProductType(value)} />
         <InfosInput value={infos} onChange={(value: string) => setInfos(value)} />
-        {position && pickedProducts && draggedPosition && (<Map
+        {position && pickedProducts && draggedPosition && (<WebMap
             wantCursor      
             markers={MarkersList} 
             initalPosition={position}

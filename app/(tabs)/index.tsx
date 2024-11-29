@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import WebMap from "@/components/WebMap";
 import PageContainer from "@/components/PageContainer";
-import { Position, ProductType, ProductTypes } from "@/constants/Types";
+import { Position, ProductType } from "@/constants/Types";
 import useUserLocation from "@/hooks/useUserLocation";
 import { useDataContext } from "@/contexts/DataContext";
 import ProductTypesInput from "@/components/ProductTypesInput";
@@ -12,15 +12,19 @@ const Home = (): JSX.Element => {
 
   const [selectedProductType, setSelectedProductType] = useState<ProductType | "">("");
 
-  // Utiliser useMemo pour mémoriser les marqueurs
+  // Utiliser useMemo pour mémoriser les marqueurs et les recalculer quand selectedProductType change
   const markers = useMemo(() => {
-      return pickedProducts.map((product) => ({
-          lat: product.position.lat,
-          lon: product.position.lon,
-          name: product.name,
-          informations: product.informations,
-          type: product.type,
-      }));
+    const filteredProducts = pickedProducts.filter((product) => {
+      if (!selectedProductType) return true;
+      return product.type === selectedProductType;
+    });
+    return filteredProducts.map((product) => ({
+      lat: product.position.lat,
+      lon: product.position.lon,
+      name: product.name,
+      informations: product.informations,
+      type: product.type,
+    }));
   }, [pickedProducts]);
 
   const [draggedPosition, setDraggedPosition] = useState<Position | null>(null);
@@ -29,26 +33,24 @@ const Home = (): JSX.Element => {
       if (position && !draggedPosition) setDraggedPosition(position);
   }, [position]);
 
-  return (
-      <PageContainer title="Vos Cuillettes">
-          {error && <p>{error}</p>}
-          <ProductTypesInput
-              value={selectedProductType} 
-              onChange={(type) => console.log(type)}
-              mode="search"             
+  return (<PageContainer title="Vos Cuillettes">
+      {error && <p>{error}</p>}
+      <ProductTypesInput
+          value={selectedProductType} 
+          onChange={(type) => setSelectedProductType(type)}
+          mode="search"           
+      />
+      {position && draggedPosition && (
+          <WebMap
+              wantCursor
+              markers={markers} // Passe les marqueurs mémorisés
+              initalPosition={position}
+              onPositionChange={(region) =>
+                  setDraggedPosition({ lat: region.lat, lon: region.lon })
+              }
           />
-          {position && draggedPosition && (
-              <WebMap
-                  wantCursor
-                  markers={markers} // Passe les marqueurs mémorisés
-                  initalPosition={position}
-                  onPositionChange={(region) =>
-                      setDraggedPosition({ lat: region.lat, lon: region.lon })
-                  }
-              />
-          )}
-      </PageContainer>
-  );
+      )}
+    </PageContainer>);
 };
 
 export default Home;

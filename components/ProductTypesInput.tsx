@@ -19,8 +19,10 @@ const styles = StyleSheet.create({
 });
 
 type ProductTypesInputProps = {
-    value: ProductType;
+    value: ProductType | "";
     onChange: (value: ProductType) => void;
+    canBeNull?: boolean;
+    mode: "create" | "search";
 };
 
 /**
@@ -30,16 +32,28 @@ type ProductTypesInputProps = {
  * @returns {JSX.Element}
  */
 const ProductTypesInput = (props: ProductTypesInputProps): JSX.Element => {
+    const possiblesValues = (): SelectOption[] => {
+        let values = [];
+        //pour chaque type de produit, on ajoute une option
+        for (let type of ProductTypes) values.push({ label: type, value: type });
+        if (props.mode === "search") values.push({ label: "pas de filtrage", value: "" });
+        return values;
+    }
+
     return (<View style={styles.container}>
-        <Text style={GlobalsStyles.text}>Dans quel type classez-vous ce trésors ?</Text>
+        <Text style={GlobalsStyles.text}>
+            {props.mode === "create" ? 
+                "A quel Type de produit appartiens ce trésors ?" : 
+                "Filtrer par type de produit"
+            }            
+        </Text>
         <SelectInput
-            options={ProductTypes.map((type) => ({ label: type, value: type }))}
+            options={possiblesValues()}
             onSelect={(newValue) => props.onChange(newValue as ProductType)}
             selectBtnStyles={styles.input}
             optionsListStyles={styles.input}          
         />
-    </View>
-    );
+    </View>);
 }
 
 export default ProductTypesInput;

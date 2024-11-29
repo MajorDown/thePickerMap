@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Map from "@/components/Map";
 import WebMap from "@/components/WebMap";
 import PageContainer from "@/components/PageContainer";
 import { PickDate, PickedProduct, Position, ProductType, ProductTypes } from "@/constants/Types";
@@ -54,16 +53,15 @@ const NewProduct = (): JSX.Element => {
         setName("");
         setInfos("");
         setProductType(ProductTypes[0]);
-        console.log("Nouveau produit ajouté !");
+        setDraggedPosition(position);
         router.push("/(tabs)");
-        console.log("Redirection vers la page d'accueil...");
     }
 
     return (<PageContainer title="Enregistrez Votre Cuillette">
         {error && <p>{error}</p>} 
         <DateInput date={date} onDateChange={(value: PickDate) => setDate(value)} />
         <NameInput value={name} onChange={(value: string) => setName(value)} />
-        <ProductTypesInput value={productType} onChange={(value: ProductType) => setProductType(value)} />
+        <ProductTypesInput mode={"create"} value={productType} onChange={(value: ProductType) => setProductType(value)} />
         <InfosInput value={infos} onChange={(value: string) => setInfos(value)} />
         {position && pickedProducts && draggedPosition && (<WebMap
             wantCursor      

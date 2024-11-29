@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
-import Map from "@/components/Map";
 import WebMap from "@/components/WebMap";
 import PageContainer from "@/components/PageContainer";
-import { Position } from "@/constants/Types";
+import { Position, ProductType, ProductTypes } from "@/constants/Types";
 import useUserLocation from "@/hooks/useUserLocation";
 import { useDataContext } from "@/contexts/DataContext";
+import ProductTypesInput from "@/components/ProductTypesInput";
 
 const Home = (): JSX.Element => {
   const { position, error } = useUserLocation();
   const { pickedProducts } = useDataContext();
+
+  const [selectedProductType, setSelectedProductType] = useState<ProductType | "">("");
 
   // Utiliser useMemo pour mémoriser les marqueurs
   const markers = useMemo(() => {
@@ -30,6 +32,11 @@ const Home = (): JSX.Element => {
   return (
       <PageContainer title="Vos Cuillettes">
           {error && <p>{error}</p>}
+          <ProductTypesInput
+              value={selectedProductType} 
+              onChange={(type) => console.log(type)}
+              mode="search"             
+          />
           {position && draggedPosition && (
               <WebMap
                   wantCursor

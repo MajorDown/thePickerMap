@@ -46,6 +46,13 @@ type WebMapProps = PropsWithChildren<{
     onPositionChange?: (position: Position) => void;
 }>;
 
+/**
+ * Composant WebMap
+ * @param {MarkerType[]} props.markers - Les marqueurs à afficher sur la carte
+ * @param {{lat: number, lon: number}} props.initalPosition - La position initiale de la carte
+ * @param {(position: Position) => void} [props.onPositionChange] - Fonction appelée lorsque la position de la carte change
+ * @returns {JSX.Element}
+ */
 const WebMap = (props: WebMapProps): JSX.Element => {
     const animation = useRef(new Animated.Value(0)).current;
 

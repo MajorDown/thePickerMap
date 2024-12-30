@@ -10,7 +10,7 @@ export type DataContextType = {
 }
 
 /**
- * Contexte pour les data de l'application
+ * @description Contexte pour les data de l'application
  * @typedef {Object} DataContextType
  * @property {SearchedProduct[]} searchedProducts
  * @property {function} updateSearchedProducts
@@ -25,7 +25,7 @@ const DataContext: Context<DataContextType> = createContext<DataContextType>({
 });
 
 /**
- * Hook pour accéder aux data de l'application
+ * @description Hook pour accéder aux data de l'application
  * @typedef {Object} PropsWithChildren
  * @property {ReactNode} children
  * @returns {JSX.Element}
@@ -39,7 +39,7 @@ export const useDataContext = (): DataContextType => {
 }
 
 /**
- * Provider pour les data de l'application
+ * @description Provider pour les data de l'application
  * @typedef {Object} PropsWithChildren
  * @property {ReactNode} children
  * @returns {JSX.Element}

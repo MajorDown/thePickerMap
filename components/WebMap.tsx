@@ -47,7 +47,7 @@ type WebMapProps = PropsWithChildren<{
 }>;
 
 /**
- * Composant WebMap
+ * @description - Composant pour afficher une carte web
  * @param {MarkerType[]} props.markers - Les marqueurs à afficher sur la carte
  * @param {{lat: number, lon: number}} props.initalPosition - La position initiale de la carte
  * @param {(position: Position) => void} [props.onPositionChange] - Fonction appelée lorsque la position de la carte change

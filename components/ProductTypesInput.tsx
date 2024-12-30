@@ -26,7 +26,7 @@ type ProductTypesInputProps = {
 };
 
 /**
- * Composant ProductTypesInput
+ * @description - Champ pour choisir un type de produit
  * @param {ProductType} props.value - La valeur actuelle
  * @param {(value: ProductType) => void} props.onChange - Fonction de rappel pour gérer le changement de valeur
  * @returns {JSX.Element}

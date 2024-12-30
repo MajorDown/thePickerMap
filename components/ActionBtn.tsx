@@ -25,7 +25,7 @@ type ActionBtnProps = PropsWithChildren<{
 }>
 
 /**
- * Composant ActionBtn
+ * @description bouton d'action principal
  * @param {() => void} props.onPress - Fonction appelée lorsque le bouton est cliqué
  * @param {string} [props.label] - Le texte du bouton
  * @param {React.ReactNode} [props.children]

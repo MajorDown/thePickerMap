@@ -42,7 +42,7 @@ type NumberInputProps = {
 }
 
 /**
- * Composant NumberInput
+ * @description - Champ pour entrer un nombre
  * @param {number} props.value - La valeur du nombre
  * @param {(value: number) => void} props.onChange - Fonction appelée lorsque la valeur change
  * @param {number} props.min - La valeur minimale

@@ -26,6 +26,11 @@ type PageContainerProps = PropsWithChildren<{
     title?: string;
 }>;
 
+/**
+ * @description - Conteneur pour les pages
+ * @param {string} [props.title] - Titre de la page
+ * @returns {JSX.Element}
+ */
 const PageContainer = (props: PageContainerProps): JSX.Element => {
     return (<View style={styles.container}>
         <Text style={styles.title}>{props.title}</Text>

@@ -20,6 +20,11 @@ type NameInputProps = {
     onChange: (name: string) => void;
 }
 
+/**
+ * @description - Champ pour entrer le nom d'un produit
+ * @param {(name: string) => void} props.onChange - Fonction appelée lorsqu'une valeur est entrée
+ * @returns {JSX.Element}
+ */
 const NameInput = (props: NameInputProps): JSX.Element => {
     return (<View style={styles.container}>
         <Text style={GlobalsStyles.text}>Qu'avez-vous trouvé ?</Text>

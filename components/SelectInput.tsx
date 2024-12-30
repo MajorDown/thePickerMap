@@ -61,7 +61,7 @@ export type SelectInputProps = {
 };
 
 /**
- * Composant de sélection d'entrée
+ * @description - Composant de liste déroulante
  * @param {SelectOption[]} props.options - Liste des options
  * @param {(value: string | number) => void} props.onSelect - Fonction de rappel pour gérer la sélection
  * @param {SelectOption} [props.defaultValue] - Option par défaut

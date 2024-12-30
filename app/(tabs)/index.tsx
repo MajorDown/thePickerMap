@@ -12,7 +12,6 @@ const Home = (): JSX.Element => {
 
   const [selectedProductType, setSelectedProductType] = useState<ProductType | "">("");
 
-  // Utiliser useMemo pour mémoriser les marqueurs et les recalculer quand selectedProductType change
   const markers = useMemo(() => {
     const filteredProducts = pickedProducts.filter((product) => {
       if (!selectedProductType) return true;

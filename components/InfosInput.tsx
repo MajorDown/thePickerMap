@@ -20,6 +20,11 @@ type InfosInputProps = {
     onChange: (name: string) => void;
 }
 
+/**
+ * @description - Champ pour ajouter des informations
+ * @param {(name: string) => void} props.onChange - Fonction appelée lorsqu'une valeur est entrée
+ * @returns {JSX.Element}
+ */
 const InfosInput = (props: InfosInputProps): JSX.Element => {
     return (<View style={styles.container}>
         <Text style={GlobalsStyles.text}>Donnez plus d'information ici :</Text>

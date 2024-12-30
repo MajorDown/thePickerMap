@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Retourne le nombre de jours dans un mois donné.
+ * @description Retourne le nombre de jours dans un mois donné.
  * @param {number} year - Année (ex. : 2024)
  * @param {number} month - Mois (1 pour janvier, 2 pour février, etc.)
  * @returns {number} - Nombre de jours dans le mois
@@ -36,7 +36,7 @@ const getDaysInMonth = (year: number, month: number): number => {
 };
 
 /**
- * Retourne un tableau des jours valides pour un mois et une année donnés.
+ * @description Retourne un tableau des jours valides pour un mois et une année donnés.
  * @param {number} year - Année (ex. : 2024)
  * @param {number} month - Mois (1 pour janvier, 2 pour février, etc.)
  * @returns {PickDate['day'][]} - Tableau des jours valides
@@ -49,7 +49,7 @@ const generateDays = (year: number, month: number): PickDate['day'][] => {
 };
 
 /**
- * Retourne la date actuelle au format PickDate.
+ * @descriptionRetourne la date actuelle au format PickDate.
  * @returns {PickDate} - La date actuelle
  */
 const getCurrentDate = (): PickDate => {
@@ -66,7 +66,7 @@ type DateInputProps = {
 };
 
 /**
- * Composant DateInput
+ * @description Composant DateInput
  * @param {PickDate} [props.date] - La date actuelle (optionnelle, par défaut : aujourd'hui)
  * @param {(date: PickDate) => void} props.onDateChange - Fonction de rappel pour gérer le changement de date
  * @returns {JSX.Element}

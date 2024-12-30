@@ -7,9 +7,7 @@ const styles = StyleSheet.create({
   tabs: {
     backgroundColor: Colors.background,
     borderTopWidth: 0,
-  },
-  tab: {},
-
+  }
 });
 
 export default function TabLayout() {

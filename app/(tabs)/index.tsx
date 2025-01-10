@@ -24,7 +24,7 @@ const Home = (): JSX.Element => {
       informations: product.informations,
       type: product.type,
     }));
-  }, [pickedProducts]);
+  }, [pickedProducts, selectedProductType]);
 
   const [draggedPosition, setDraggedPosition] = useState<Position | null>(null);
 

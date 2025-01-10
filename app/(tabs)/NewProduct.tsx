@@ -27,7 +27,11 @@ const NewProduct = (): JSX.Element => {
     const [name, setName] = useState<string>("");
     const [infos, setInfos] = useState<string>("");
     const [productType, setProductType] = useState<ProductType>(ProductTypes[0]);
-    const [date, setDate] = useState<PickDate>();
+    const [date, setDate] = useState<PickDate>({
+        day: new Date().getDate().toString().padStart(2, '0') as PickDate['day'],
+        month: (new Date().getMonth() + 1).toString().padStart(2, '0') as PickDate['month'],
+        year: new Date().getFullYear().toString() as PickDate['year']
+    });
 
     useEffect(() => {
         if (position && !draggedPosition) setDraggedPosition(position);
@@ -41,6 +45,7 @@ const NewProduct = (): JSX.Element => {
         if (!draggedPosition) return;
 
         const id = generateProductId();
+        console.log("id :", id);
         const newPickedProduct = { 
             id, 
             name, 
@@ -50,6 +55,7 @@ const NewProduct = (): JSX.Element => {
             date 
         } as PickedProduct;
         updatePickedProducts([...pickedProducts, newPickedProduct]);
+        console.log(pickedProducts);
         setName("");
         setInfos("");
         setProductType(ProductTypes[0]);

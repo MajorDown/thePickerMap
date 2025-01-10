@@ -1,3 +1,7 @@
+/**
+ * @description Generates a unique product ID based on the current date and time
+ * @returns a string with the current date and time in the format PYYMMDDHHMMSSMMM
+ */
 export function generateProductId() {
     const now = new Date();
     const year = now.getFullYear().toString().slice(2);

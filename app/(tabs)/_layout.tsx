@@ -33,14 +33,14 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="location-arrow" color={color} />,
         }}
       />
-      {/* <Tabs.Screen
+      <Tabs.Screen
         name="Settings"
         options={{
           headerShown: false,
-          title: 'Settings',
+          title: 'Options',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
         }}
-      /> */}
+      />
     </Tabs>
   );
 }

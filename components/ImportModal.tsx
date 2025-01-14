@@ -7,6 +7,12 @@ type ImportModalProps = {
     setIsVisible: (visible: boolean) => void
 }
 
+/*
+* @description Modal pour importer des cueillettes
+* @params {boolean} props.isVisible
+* @params {function} props.setIsVisible
+* @returns {JSX.Element}
+* **/
 const ImportModal = (props: ImportModalProps):JSX.Element => {
 
     const handleImportData = () => {

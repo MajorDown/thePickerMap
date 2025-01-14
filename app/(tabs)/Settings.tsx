@@ -2,7 +2,7 @@ import ActionBtn from '@/components/ActionBtn';
 import PageContainer from '@/components/PageContainer';
 import { useState } from 'react';
 import DeleteModal from '@/components/DeleteModal';
-import ImportModal from '@/components/ImportMOdal';
+import ImportModal from '@/components/ImportModal';
 import ExportModal from '@/components/ExportModal';
 
 const Settings = ():JSX.Element => {

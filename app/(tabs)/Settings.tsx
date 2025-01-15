@@ -11,7 +11,7 @@ const Settings = ():JSX.Element => {
   const [isExportModaleVisible, setIsExportModaleVisible] = useState(false);
 
   return (<PageContainer title="Options">
-    <ActionBtn label="effacer les données de l'application" onPress={() => setIsDeleteModaleVisible(true)} />
+    <ActionBtn label="Effacer les données de l'application" onPress={() => setIsDeleteModaleVisible(true)} />
     <DeleteModal isVisible={isDeleteModaleVisible} setIsVisible={setIsDeleteModaleVisible} />
     <ActionBtn label="Importer des données" onPress={() => setIsImportModaleVisible(true)} />
     <ImportModal isVisible={isImportModaleVisible} setIsVisible={setIsImportModaleVisible} />

@@ -1,16 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
-import WebMap from "@/components/WebMap";
+import WebMap, {MarkerType} from "@/components/WebMap";
 import PageContainer from "@/components/PageContainer";
-import { Position, ProductType } from "@/constants/Types";
+import { PickedProduct, Position, ProductType } from "@/constants/Types";
 import useUserLocation from "@/hooks/useUserLocation";
 import { useDataContext } from "@/contexts/DataContext";
 import ProductTypesInput from "@/components/ProductTypesInput";
+import ProductModal from "@/components/ProductModal";
 
 const Home = (): JSX.Element => {
   const { position, error } = useUserLocation();
   const { pickedProducts } = useDataContext();
 
   const [selectedProductType, setSelectedProductType] = useState<ProductType | "">("");
+  const [isProductModalVisible, setIsProductModalVisible] = useState(false);
+  const [productToDisplay, setProductToDisplay] = useState<PickedProduct | null>(null);
 
   const markers = useMemo(() => {
     const filteredProducts = pickedProducts.filter((product) => {
@@ -23,6 +26,7 @@ const Home = (): JSX.Element => {
       name: product.name,
       informations: product.informations,
       type: product.type,
+      id: product.id,
     }));
   }, [pickedProducts, selectedProductType]);
 
@@ -31,6 +35,11 @@ const Home = (): JSX.Element => {
   useEffect(() => {
       if (position && !draggedPosition) setDraggedPosition(position);
   }, [position]);
+
+  const handleOpenModal = (marker: MarkerType) => {
+    setProductToDisplay(pickedProducts.find((product) => product.id === marker.id) as PickedProduct);
+    setIsProductModalVisible(true);
+  }
 
   return (<PageContainer title="Vos Cuillettes">
       {error && <p>{error}</p>}
@@ -47,8 +56,16 @@ const Home = (): JSX.Element => {
               onPositionChange={(region) =>
                   setDraggedPosition({ lat: region.lat, lon: region.lon })
               }
+              onMarkerClick={(marker: MarkerType) => {
+                  handleOpenModal(marker);
+              }}
           />
       )}
+      {productToDisplay && <ProductModal
+          product={productToDisplay}
+          isVisible={isProductModalVisible}
+          setIsVisible={setIsProductModalVisible}
+      />}
     </PageContainer>);
 };
 

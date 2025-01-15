@@ -1,9 +1,16 @@
-import { Text } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import ActionBtn from "./ActionBtn"
 import MessageModal from "./MessageModal"
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import { useDataContext } from '@/contexts/DataContext';
+import color from '@/constants/Colors';
+
+const styles = StyleSheet.create({
+    text: {
+        color: color.white,
+    }
+})
 
 
 type ExportModalProps = {
@@ -53,7 +60,7 @@ const ExportModal = (props: ExportModalProps):JSX.Element => {
         visible={props.isVisible}
         onClose={() => props.setIsVisible(false)}
     >
-        <Text>Souhaitez-vous vraiment Exporter des Cueillettes à partir d'un fichier ?</Text>
+        <Text style={styles.text}>Souhaitez-vous vraiment Exporter des Cueillettes à partir d'un fichier ?</Text>
         <ActionBtn label="exporter au format json" onPress={() => handleExportData()} />
         <ActionBtn label="Annuler" onPress={() => props.setIsVisible(false)} />
     </MessageModal>

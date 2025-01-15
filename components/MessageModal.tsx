@@ -1,18 +1,18 @@
 // MessageModal.tsx
 import { PropsWithChildren } from 'react';
 import { Modal, StyleSheet, View, TouchableOpacity } from 'react-native';
+import colors from '@/constants/Colors';
 
 type MessageModalProps = PropsWithChildren<{
   visible: boolean;
   onClose: () => void;
-  transparent?: boolean;
 }>
 
 const MessageModal = (props: MessageModalProps) => {
   return (
     <Modal
       animationType={'slide'}
-      transparent={props.transparent}
+      transparent={true}
       visible={props.visible}
       onRequestClose={props.onClose} // Utile surtout sous Android
     >
@@ -42,7 +42,7 @@ export default MessageModal;
 const styles = StyleSheet.create({
   modalBackground: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)', // fond semi-transparent
+    backgroundColor: 'rgba(255, 255, 255, 0.67)', // fond semi-transparent
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     maxWidth: 400,
   },
   modalContent: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.background, // fond blanc opaque
     borderRadius: 10,
     padding: 20,
   },

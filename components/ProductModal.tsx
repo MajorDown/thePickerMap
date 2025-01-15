@@ -7,6 +7,9 @@ import color from '@/constants/Colors';
 const styles = StyleSheet.create({
     text: {
         color: color.white,
+    },
+    wrapper: {
+        padding: 10
     }
 })
 
@@ -30,9 +33,9 @@ const ProductModal = (props: ProductModalProps):JSX.Element => {
         visible={props.isVisible}
         onClose={() => props.setIsVisible(false)}
     >
-        <Text>Cueillette du {props.product.date.day.toString()}/{props.product.date.month.toString()}/{props.product.date.year.toString()}</Text>
-        <View>
-            <Text>{props.product.name}</Text>
+        <Text style={styles.text}>Cueillette du {props.product.date.day.toString()}/{props.product.date.month.toString()}/{props.product.date.year.toString()}</Text>
+        <View style={styles.wrapper}>
+            <Text style={styles.text}>{props.product.name}</Text>
             <Text style={styles.text}>type : {props.product.type}</Text>
             <Text style={styles.text}>description:</Text>
             <Text style={styles.text}>"{props.product.informations}"</Text>

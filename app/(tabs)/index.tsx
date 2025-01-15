@@ -34,7 +34,7 @@ const Home = (): JSX.Element => {
 
   useEffect(() => {
       if (position && !draggedPosition) setDraggedPosition(position);
-  }, [position]);
+  }, [position, pickedProducts]);
 
   const handleOpenModal = (marker: MarkerType) => {
     setProductToDisplay(pickedProducts.find((product) => product.id === marker.id) as PickedProduct);

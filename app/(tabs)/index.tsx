@@ -6,12 +6,14 @@ import useUserLocation from "@/hooks/useUserLocation";
 import { useDataContext } from "@/contexts/DataContext";
 import ProductTypesInput from "@/components/ProductTypesInput";
 import ProductModal from "@/components/ProductModal";
+import ProductFilterInput, {PossibleFilter, possibleFilters} from "@/components/ProductFilterInput";
 
 const Home = (): JSX.Element => {
   const { position, error } = useUserLocation();
   const { pickedProducts } = useDataContext();
 
   const [selectedProductType, setSelectedProductType] = useState<ProductType | "">("");
+  const [selectedFilter, setSelectedFilter] = useState<PossibleFilter>(possibleFilters[0]);
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
   const [productToDisplay, setProductToDisplay] = useState<PickedProduct | null>(null);
 
@@ -47,6 +49,10 @@ const Home = (): JSX.Element => {
           value={selectedProductType} 
           onChange={(type) => setSelectedProductType(type)}
           mode="search"           
+      />
+      <ProductFilterInput
+          value={selectedFilter} 
+          onChange={(type) => setSelectedFilter(type)}
       />
       {position && draggedPosition && (
           <WebMap

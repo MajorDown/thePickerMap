@@ -5,6 +5,10 @@ import MessageModal from './MessageModal';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import color from '@/constants/Colors';
+import { useDataContext } from '@/contexts/DataContext';
+import { PickedProduct } from '@/constants/Types';
+import dataManager from '@/data/dataManager';
+import {router} from 'expo-router';
 
 const styles = StyleSheet.create({
     text: {
@@ -18,6 +22,7 @@ type ImportModalProps = {
 };
 
 const ImportModal = (props: ImportModalProps): JSX.Element => {
+  const { updatePickedProducts } = useDataContext();
 
   const handleImportData = async () => {
     try {
@@ -51,11 +56,12 @@ const ImportModal = (props: ImportModalProps): JSX.Element => {
       const fileContent = await FileSystem.readAsStringAsync(file.uri);
 
       // 6. Parser le JSON
-      const importedData = JSON.parse(fileContent);
+      const importedData = JSON.parse(fileContent) as PickedProduct[];
       console.log('Données importées :', importedData);
-
-      // À partir d’ici, tu peux stocker `importedData` dans ton contexte / state.
-      // ex: setPickedProducts(importedData);
+      // Mise à jour du contexte et du local storage
+      updatePickedProducts(importedData);
+      await dataManager.setPickedProducts(importedData);
+      router.push('/');
     } catch (error) {
       console.error('Erreur lors de l’import de données :', error);
     }

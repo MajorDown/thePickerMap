@@ -1,6 +1,5 @@
 import { StyleSheet, View, Text } from "react-native";
 import SelectInput, {SelectOption} from "./SelectInput";
-import { ProductType } from "@/constants/Types";
 import GlobalsStyles from "@/constants/Styles";
 import Colors from "@/constants/Colors";
 
@@ -27,8 +26,8 @@ export const possibleFilters: SelectOption[] = [
 export type PossibleFilter = (typeof possibleFilters[number]);
 
 type ProductFilterInputProps = {
-    value: ProductType | "";
-    onChange: (value: ProductType) => void;
+    value: PossibleFilter;
+    onChange: (value: PossibleFilter) => void;
     canBeNull?: boolean;
 };
 
@@ -44,7 +43,7 @@ const ProductFilterInput = (props: ProductFilterInputProps): JSX.Element => {
         <Text style={GlobalsStyles.text}>Choisissez le filtre :</Text>
         <SelectInput
             options={possibleFilters}
-            onSelect={(newValue) => props.onChange(newValue as ProductType)}
+            onSelect={(newValue) => props.onChange(newValue as unknown as PossibleFilter)}
             selectBtnStyles={styles.input}
             optionsListStyles={styles.input}          
         />
